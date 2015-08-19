@@ -206,11 +206,13 @@
     
     function createPing(data) {
         if (data.config.notifications) {
-            var notification = new Notification(data.user, {
-                body: data.message,
-                icon: data.avatar
-            });
-            setTimeout(function() { notification.close() }, 5000);
+            if (!document.hasFocus()) {
+                var notification = new Notification(data.user, {
+                    body: data.message,
+                    icon: data.avatar
+                });
+                setTimeout(function() { notification.close() }, 5000);
+            }
         }
         
         if (data.config.audio) {
