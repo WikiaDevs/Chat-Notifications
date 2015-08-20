@@ -153,7 +153,7 @@
         });
         
         fillInDefaults(config);
-        $('#window-perm').click(function() { Notifications.requestPermission() });
+        $('#window-perm').click(function() { Notification.requestPermission() });
         $('#audio-test').click(function() { new Audio($('input[name=audio-input]').val()).play() });
         $('#color-test').click(function() { $('#fake-ping').css('color', $('input[name=color-input]').val()) });
     }
