@@ -42,7 +42,7 @@
             ro: ($('#iflag-cn').prop('checked') === true) ? 'i' : ''
         };
         
-        setConfigurtion(settings);
+        setConfiguration(settings);
     }
     
     function fillInDefaults(config) {
@@ -158,7 +158,7 @@
         $('#color-test').click(function() { $('#fake-ping').css('color', $('input[name=color-input]').val()) });
     }
     
-    function setConfigurtion(config) {
+    function setConfiguration(config) {
         _configuration = config;
         localStorage.setItem('cnConfig', JSON.stringify(config));
     }
@@ -167,6 +167,20 @@
         if (typeof _configuration === 'undefined') {
             if (typeof localStorage.getItem('cnConfig') === 'string') {
                 _configuration = JSON.parse(localStorage.getItem('cnConfig'));
+            } else {
+                var config = {
+                    notifications: false,
+                    audio: false,
+                    audioUrl: 'http://vignette1.wikia.nocookie.net/central/images/c/cf/Ping.ogg/revision/latest',
+                    color: '#FF0000',
+                    blocked: [],
+                    pings: [ mw.config.get('wgUserName') ],
+                    roi: '',
+                    type: 'case'
+                };
+                
+                setConfiguration(config);
+                return config;
             }
         }
         
@@ -206,11 +220,13 @@
     
     function createPing(data) {
         if (data.config.notifications) {
-            var notification = new Notification(data.user, {
-                body: data.message,
-                icon: data.avatar
-            });
-            setTimeout(function() { notification.close() }, 5000);
+            if (!document.hasFocus()) {
+                var notification = new Notification(data.user, {
+                    body: data.message,
+                    icon: data.avatar
+                });
+                setTimeout(function() { notification.close() }, 5000);
+            }
         }
         
         if (data.config.audio) {
