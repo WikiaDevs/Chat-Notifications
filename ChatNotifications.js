@@ -2,7 +2,6 @@
     var _configuration;      
     var _i18n = {
         'en': {
-            'spacial_page': 'Special:Chat',
             'modal_title': 'Chat Notifications',
             'enable': 'enable',
             'window_note': 'HTML5 notifications',
@@ -26,10 +25,6 @@
             'cancel': 'Cancel'
         }
     };
-    
-    if (mw.config.get('wgPageName') !== _i18n[mw.config.get('wgUserLanguage')]['special_page']) {
-        return;
-    }
     
     function hasNotificationPermission() {
         return (Notification.permission !== 'granted') ? false : true;
