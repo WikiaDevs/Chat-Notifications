@@ -1,7 +1,18 @@
+// ==UserScript==
+// @name         Chat Notifications
+// @namespace    http://your.homepage/
+// @version      0.1
+// @description  enter something useful
+// @author       You
+// @match        http://*.wikia.com/wiki/Special:Chat
+// @grant        none
+// ==/UserScript==
+
 ;(function(window, $, mw) {
     var _configuration;      
     var _i18n = {
         'en': {
+            'spacial_page': 'Special:Chat',
             'modal_title': 'Chat Notifications',
             'enable': 'enable',
             'window_note': 'HTML5 notifications',
@@ -25,6 +36,10 @@
             'cancel': 'Cancel'
         }
     };
+    
+    if (mw.config.get('wgPageName') !== _i18n[mw.config.get('wgUserLanguage')]['special_page']) {
+        return;
+    }
     
     function hasNotificationPermission() {
         return (Notification.permission !== 'granted') ? false : true;
@@ -268,12 +283,10 @@
     $('textarea[name=message').keydown(function(e) {
         if (e.which === 13) {
             var text = $(this).val();
-            if (text.substr(0, 1) === '/') {
-                if (text.substr(1, 13) === 'notifications') {
-                    e.preventDefault();
-                    $(this).val('');
-                    openUI();
-                }
+            if (text.substr(0, 1) === '/' && text.substr(1, 13) === 'notifications') {
+                e.preventDefault();
+                $(this).val('');
+                openUI();
             }
         }
     });
