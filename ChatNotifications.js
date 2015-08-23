@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name         Chat Notifications
-// @namespace    http://your.homepage/
-// @version      0.1
-// @description  enter something useful
-// @author       You
-// @match        http://*.wikia.com/wiki/Special:Chat
-// @grant        none
-// ==/UserScript==
-
 ;(function(window, $, mw) {
     var _configuration;      
     var _i18n = {
